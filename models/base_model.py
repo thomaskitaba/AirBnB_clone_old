@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ base_model """
+import models
 import uuid
 from datetime import datetime
 
@@ -20,7 +21,7 @@ class BaseModel:
                 elif kwargs[key] == "id":
                     self.id = val
         else:
-            pass
+            models.storage.new(self)
 
     def __str__(self):
         """ __str__ """
@@ -32,6 +33,7 @@ class BaseModel:
     def save(self):
         """ save """
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """Return the dictionary representation of a Rectangle."""
