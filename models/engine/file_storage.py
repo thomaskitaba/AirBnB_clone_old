@@ -1,0 +1,48 @@
+#!/usr/bin/python3
+""" base_model """
+import json
+from datetime import datetime
+
+
+class FileStorage:
+    """FileStorage"""
+    __file_path = "file.json"
+    __objects = {}
+
+    def all(self):
+        """returns the dictionary __objects"""
+        return FileStorage.__objects
+    def new(self, obj):
+        """sets in __objects the obj with key <obj class name>.id"""
+        key = f"{obj.__class__.__name__}.{obj.id}"
+
+        return FileStorage.__objects[key] = obj #TODO:
+
+    def save(self):
+        """serializes __objects to the JSON file (path: __file_path)"""
+        temp_dict = {}
+            # >>> _objects = {'ob.11': obj1, 'ob.22': obj2,...}
+            for obj in FileStorage.__objects:
+                temp_dict[obj] = FileStorage.__objects[obj].to_dict()
+             # >>> temp_dict = {'ob.11': {'id': 11, 'name': aa,...}, {'id': 11, 'name': aa,...},...}
+            with open(FileStorage.__file_path, 'w') as db_f:
+                json_text = json.dumps(FileStorage.__objects)
+                db_f.write(json_text)
+                # or we can use json.dumps(FileStorage.__objects, db_f)
+
+    def reload(self):
+        """deserializes the JSON file to __objects
+        (only if the JSON file (__file_path) exists
+        otherwise, do nothing. If the file doesn’t exist,
+        no exception should be raised)"""
+        temp_dict = {}
+        try
+            with open(FileStorage.__file_path, 'r') as db_f:
+                temp_dict = json.loads(db_f)
+                for obj in temp_dict.values():
+                    FileStorage.new(eval(obj["__class__"])(**obj))
+                    del obj["__class__"]
+
+        except Exception as e:
+        # except FileNotFoundError:
+            pass

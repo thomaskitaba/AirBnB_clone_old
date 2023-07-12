@@ -35,10 +35,19 @@ class BaseModel:
 
     def to_dict(self):
         """Return the dictionary representation of a Rectangle."""
+        # we can use this or
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
         return {
             "id": self.id,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat(),
+            "my_number": self.my_number,
+            "name": self.name,
             "__class__": self.__class__.__name__
         }
+        # or
+        # temp_dict = self.__dict__.copy()
+        # temp_dict["created_at"] = temp_dict["created_at"].isoformat()
+        # temp_dict["updated_at"] = temp_dict["updated_at"].isoformat()
+        # temp_dict["__class__"] = self.__class__.__name__
+        # return temp_dict
