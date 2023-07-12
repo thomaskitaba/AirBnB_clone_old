@@ -17,7 +17,7 @@ class BaseModel:
                     self.created_at = datetime.strptime(val, t_format)
                 elif kwargs[key] == "updated_at":
                     self.updated_at = datetime.strptime(val, t_format)
-                else:
+                elif kwargs[key] == "id":
                     self.id = val
         else:
             pass
