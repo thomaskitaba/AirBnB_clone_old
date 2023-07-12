@@ -37,19 +37,21 @@ class FileStorage:
         (only if the JSON file (__file_path) exists
         otherwise, do nothing. If the file doesn’t exist,
         no exception should be raised)"""
-        temp_dict = {}
+
         try:
-            with open(FileStorage.__file_path, 'r') as db_f:
+            with open(FileStorage.__file_path) as db_f:
                 temp_dict = json.load(db_f)
                 for dict_val in temp_dict.values():
                     # convert dict_val to object of class __class__
                     # since new(self, obj) method
                     # accepts obj as parrameter
-                    FileStorage.new(eval(obj["__class__"])(**dict_val))
+                    cls_name = dict_val["__class__"]
                     # delete __class__ key since we dont need it
                     # it will be generated every time we use to_dict()
                     del dict_val["__class__"]
+                    self.new(eval(cls_name)(**dict_val))
+
 
         except Exception as e:
             # except FileNotFoundError:
-            pass
+            return
