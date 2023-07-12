@@ -21,6 +21,7 @@ class BaseModel:
                     self.id = val
         else:
             pass
+
     def __str__(self):
         """ __str__ """
         c_name = self.__class__.__name__
@@ -31,6 +32,7 @@ class BaseModel:
     def save(self):
         """ save """
         self.updated_at = datetime.now()
+
     def to_dict(self):
         """Return the dictionary representation of a Rectangle."""
         t_format = "%Y-%m-%dT%H:%M:%S.%f"

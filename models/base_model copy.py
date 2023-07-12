@@ -9,17 +9,16 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         t_format = "%Y-%d-%mT%H:%M:%S.%f"
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.now().isoformat()
-        self.updated_at = datetime.now().isoformat()
-
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
         if kwargs:
             for key, val in kwargs.items():
-                if kwargs[key] == "id":
-                    self.id = val
-                elif kwargs[key] == "created_at":
-                    self.created_at = datetime.now().strptime(val, t_format).isoformat()
+                if kwargs[key] == "created_at":
+                    self.created_at = datetime.strptime(val, t_format)
                 elif kwargs[key] == "updated_at":
-                    self.updated_at = datetime.now().strptime(val, t_format).isoformat()
+                    self.updated_at = datetime.strptime(val, t_format)
+                elif kwargs[key] == "id":
+                    self.id = val
         else:
             pass
     def __str__(self):
@@ -31,14 +30,13 @@ class BaseModel:
 
     def save(self):
         """ save """
-        self.updated_at = datetime.now().isoformat()
-
+        self.updated_at = datetime.now()
     def to_dict(self):
         """Return the dictionary representation of a Rectangle."""
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
         return {
             "id": self.id,
-            "created_at": datetime.strptime(self.created_at, t_format).isoformat(),
-            "updated_at": datetime.strptime(self.updated_at, "%Y-%m-%dT%H:%M:%S.%f").isoformat(),
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat(),
             "__class__": self.__class__.__name__
         }
