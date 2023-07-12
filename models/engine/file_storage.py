@@ -39,7 +39,7 @@ class FileStorage:
         no exception should be raised)"""
         temp_dict = {}
         try:
-            with open(FileStorage.__file_path, 'r') as db_f:
+            with open(FileStorage.__file_path) as db_f:
                 temp_dict = json.loads(db_f)
                 for dict_val in temp_dict.values():
                     # convert dict_val to object of class __class__
