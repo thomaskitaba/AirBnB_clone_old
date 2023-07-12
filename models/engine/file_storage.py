@@ -45,10 +45,11 @@ class FileStorage:
                     # convert dict_val to object of class __class__
                     # since new(self, obj) method
                     # accepts obj as parrameter
-                    FileStorage.new(eval(obj["__class__"])(**dict_val))
+                    class_name = obj["__class__"]
+                    del dict_val["__class__"]
+                    FileStorage.new(eval(class_name)(**dict_val))
                     # delete __class__ key since we dont need it
                     # it will be generated every time we use to_dict()
-                    del dict_val["__class__"]
 
         except Exception as e:
             # except FileNotFoundError:
