@@ -8,6 +8,13 @@ class Base():
         self.id = uuid4()
         self.updated_at = datetime.now()
 
+class ChildBase(Base):
+    def __init__(self):
+        self.c_id = uuid4()
+
+print("1 ==============================")
+print(Base.__classes)
+print("end of 1---------------------------")
 
 print(datetime.now().isoformat())
 print(datetime.today().isoformat(sep="T", timespec="microseconds"))

@@ -29,16 +29,42 @@ class HBNBCommand(cmd.Cmd):
             2 - saves it (to the JSON file)
             3 - and prints the id.
         """
-        bm1 = BaseModel()
-        models.storage.save()
-        print(bm1.id)
+        if len(arg) == 0:
+            print("** class name missing **")
+            return
+        try:
+            bm1 = eval(arg)()
+            models.storage.save()
+            print(bm1)
+        except Exception as e:
+            print("** class doesn't exist **")
+
 
     def do_show(self, arg):
         """ Prints the string representation of
             an instance based on the class name and id
         """
-        pass
-
+        # If the class name is missing, print ** class name missing **
+        if len(arg[0]) == 0:
+            print("** class name missing **")
+            return
+        # If the cls name doesn’t exist, print ** class doesn't exist
+        # __** (ex: $ show MyModel)
+        try:
+            pass
+        exept Exception as e:
+            pass
+        # If the id is missing, print ** instance id missing **
+        # __(ex: $ show BaseModel)
+        if len(arg[1]) == 0:
+            print("** class name missing **")
+            return
+        # If the inst of the cls name doesn’t exist for the id,
+        # __print ** no instance found **
+        try:
+            pass
+        exept Exception as e:
+            pass
     def do_show(self, arg):
         """ Deletes an instance based on the class name
             and id (save the change into the JSON file)
