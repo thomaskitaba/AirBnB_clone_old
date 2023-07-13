@@ -61,6 +61,13 @@ class HBNBCommand(cmd.Cmd):
     #     "Review"
     # }
 
+    def default(self, arg):
+        """ default action """
+        arg = "do_something(arg1, arg2)"
+        match = re.search(r"\((.*?)\)", arg)
+        argl = [arg[:match.span()[0]], arg[match.span()[1] - 1:]]
+        print(argl)
+
     def do_quit(self, arg):
         """ quit the command interpreter """
         return True
@@ -146,7 +153,7 @@ class HBNBCommand(cmd.Cmd):
             all_obj = storage.all()
             key = "{}.{}".format(new_arg[0], new_arg[1])
             del all_obj[key]
-            print("destroyed")
+            storage.save()
 
     def do_all(self, arg):
         """ Prints all string representation of all
