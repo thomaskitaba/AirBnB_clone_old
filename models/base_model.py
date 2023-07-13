@@ -28,7 +28,7 @@ class BaseModel:
         c_name = self.__class__.__name__
         id = self.id
         dict = self.__dict__
-        return ("[{}] ({}) <{}>".format(c_name, id, dict))
+        return ("[{}] ({}) {}".format(c_name, id, dict))
 
     def save(self):
         """ save """

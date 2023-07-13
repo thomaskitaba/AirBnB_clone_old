@@ -37,6 +37,9 @@ def parse(arg):
 
 
 class HBNBCommand(cmd.Cmd):
+    """ Holberton Command interpretor
+        using cmd module
+    """
     prompt = "(hbnb) "
     # get all subclasses of BaseModel
     subclasses = BaseModel.__subclasses__()
@@ -46,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
     # output>>> classes = ["User", "State", City",
     # "Place", "Amenity", "Review"]
     __classes.append("BaseModel")
-
+    #we can also use this instead
     # __classes = {
     #     "BaseModel",
     #     "User",
