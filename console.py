@@ -60,12 +60,17 @@ class HBNBCommand(cmd.Cmd):
     #     "Amenity",
     #     "Review"
     # }
+    def emptyline(self):
+        """ not to send arg to default method
+            when empty line is entered
+        """
+        pass
 
     def default(self, arg):
         """ default action """
-        arg = "do_something(arg1, arg2)"
-        match = re.search(r"\((.*?)\)", arg)
-        argl = [arg[:match.span()[0]], arg[match.span()[1] - 1:]]
+        arg2 = "do_something(arg1, arg2)"
+        match = re.search(r"\((.*?)\)", arg2)
+        argl = [arg2[:match.span()[0]], arg2[match.span()[1]:-1]]
         print(argl)
 
     def do_quit(self, arg):
@@ -108,7 +113,7 @@ class HBNBCommand(cmd.Cmd):
         #     print(bm1.id)
         #     # or in short
         #     # print(eval(new_arg[0])().id)
-        #     storage.save()
+        storage.save()
 
     def do_show(self, arg):
         """ Prints the string representation of
@@ -160,13 +165,17 @@ class HBNBCommand(cmd.Cmd):
             instances based or not on the class name
         """
         new_arg = parse(arg)
-        if new_arg:
-            if str(new_arg[0]) != "BaseModel":
-                print("** class doesn't exist **")
-            else:
-                print([storage.all()])
+        if len(new_arg) > 0 and new_arg[0] not in HBNBCommand.__classes:
+               print("** class doesn't exist **")
         else:
-            print([storage.all()])
+            all_objs = storage.all()
+            output_objs = []
+            for obj in all_objs:
+                if len(new_arg) == 0:
+                    output_objs.append(all_objs[obj].__str__())
+                elif all_objs[obj].__class__.__name__ == new_arg[0]:
+                    output_objs.append(all_objs[obj].__str__())
+            print(output_objs)
 
     def do_update(self, arg):
         """ Updates an instance based on the class
