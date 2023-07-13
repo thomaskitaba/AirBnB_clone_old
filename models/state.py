@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-from models import BaseModel
-""" State sub classes of BaseModel """
+"""State subclass of BaseModel"""
+from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """ State """
+    """ State sub classes of BaseModel """
     name = ""

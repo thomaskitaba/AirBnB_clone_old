@@ -17,7 +17,10 @@ class ChildBase2(Base):
 
 print("1 ==============================")
 subclasses = Base.__subclasses__()
+__classes = [sub.__name__ for sub in subclasses]
 print (subclasses)
+print(__classes)
+
 print("end of 1---------------------------")
 
 print(datetime.now().isoformat())

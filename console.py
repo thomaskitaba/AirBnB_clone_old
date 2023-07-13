@@ -1,8 +1,17 @@
 #!/usr/bin/python3
 import cmd
-import models
+import re
+from shlex import split
+import string
+from models import storage
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 """ console.py entry point ot the
     command interpreter
 """
@@ -32,12 +41,21 @@ class HBNBCommand(cmd.Cmd):
     # get all subclasses of BaseModel
     subclasses = BaseModel.__subclasses__()
     # output>>>
-    __classes = [sub.__name__ for sub in subclasses]
+    __classes = [str(sub.__name__) for sub in subclasses]
     # append "BaseModel" to classes
     # output>>> classes = ["User", "State", City",
     # "Place", "Amenity", "Review"]
     __classes.append("BaseModel")
 
+    # __classes = {
+    #     "BaseModel",
+    #     "User",
+    #     "State",
+    #     "City",
+    #     "Place",
+    #     "Amenity",
+    #     "Review"
+    # }
     def do_quit(self, arg):
         """ quit the command interpreter """
         return True
@@ -56,9 +74,9 @@ class HBNBCommand(cmd.Cmd):
             3 - and prints the id.
         """
         new_arg = parse(arg)
+        print(HBNBCommand.__classes)
         if len(arg) == 0:
             print("** class name missing **")
-            return
         # -----we can also use this code -----
         # try:
         #     bm1 = eval(arg)()
@@ -67,8 +85,15 @@ class HBNBCommand(cmd.Cmd):
         # except Exception as e:
         #     print("** class doesn't exist **")
         # -------------------------------------
-        if arg[0] not in HBNBCommand.__classes:
+
+        elif new_arg[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
+        else:
+            bm1 = eval(new_arg[0])()
+            print(bm1.id)
+            # or in short
+            # print(eval(new_arg[0])().id)
+            storage.save()
 
     def do_show(self, arg):
         """ Prints the string representation of
@@ -80,10 +105,7 @@ class HBNBCommand(cmd.Cmd):
             return
         # If the cls name doesn’t exist, print ** class doesn't exist
         # __** (ex: $ show MyModel)
-        try:
-            pass
-        exept Exception as e:
-            pass
+        pass
         # If the id is missing, print ** instance id missing **
         # __(ex: $ show BaseModel)
         if len(arg[1]) == 0:
@@ -91,16 +113,13 @@ class HBNBCommand(cmd.Cmd):
             return
         # If the inst of the cls name doesn’t exist for the id,
         # __print ** no instance found **
-        try:
-            pass
-        exept Exception as e:
-            pass
+        pass
 
     def do_show(self, arg):
         """ Deletes an instance based on the class name
             and id (save the change into the JSON file)
         """
-        pass
+        new_arg = parse(arg)
 
     def do_all(self, arg):
         """ Prints all string representation of all

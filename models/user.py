@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ base_model """
-from models import BaseModel
+from models.base_model import BaseModel
 
 
 
