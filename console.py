@@ -8,9 +8,36 @@ from models.engine.file_storage import FileStorage
 """
 
 
+# TODO: will be replaced latter
+def parse(arg):
+    curly_braces = re.search(r"\{(.*?)\}", arg)
+    brackets = re.search(r"\[(.*?)\]", arg)
+    if curly_braces is None:
+        if brackets is None:
+            return [i.strip(",") for i in split(arg)]
+        else:
+            lexer = split(arg[:brackets.span()[0]])
+            retl = [i.strip(",") for i in lexer]
+            retl.append(brackets.group())
+            return retl
+    else:
+        lexer = split(arg[:curly_braces.span()[0]])
+        retl = [i.strip(",") for i in lexer]
+        retl.append(curly_braces.group())
+        return retl
+
+
 class HBNBCommand(cmd.Cmd):
-    intro = ""
     prompt = "(hbnb) "
+    __classes = [
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Place",
+        "Amenity",
+        "Review"
+    ]
 
     def do_quit(self, arg):
         """ quit the command interpreter """
@@ -39,7 +66,6 @@ class HBNBCommand(cmd.Cmd):
         except Exception as e:
             print("** class doesn't exist **")
 
-
     def do_show(self, arg):
         """ Prints the string representation of
             an instance based on the class name and id
@@ -65,6 +91,7 @@ class HBNBCommand(cmd.Cmd):
             pass
         exept Exception as e:
             pass
+
     def do_show(self, arg):
         """ Deletes an instance based on the class name
             and id (save the change into the JSON file)
@@ -83,6 +110,7 @@ class HBNBCommand(cmd.Cmd):
             (save the change into the JSON file)
         """
         pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

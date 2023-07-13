@@ -8,12 +8,16 @@ class Base():
         self.id = uuid4()
         self.updated_at = datetime.now()
 
-class ChildBase(Base):
+class ChildBase1(Base):
     def __init__(self):
-        self.c_id = uuid4()
+        self.c1_id = uuid4()
+class ChildBase2(Base):
+    def __init__(self):
+        self.c2_id = uuid4()
 
 print("1 ==============================")
-print(Base.ChildBase)
+if Base.ChildBase:
+    print ("True")
 print("end of 1---------------------------")
 
 print(datetime.now().isoformat())
