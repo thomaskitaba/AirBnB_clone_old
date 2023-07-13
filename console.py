@@ -50,7 +50,7 @@ class HBNBCommand(cmd.Cmd):
     # output>>> classes = ["User", "State", City",
     # "Place", "Amenity", "Review"]
     __classes.append("BaseModel")
-    #we can also use this instead
+    # we can also use this instead
     # __classes = {
     #     "BaseModel",
     #     "User",
@@ -60,6 +60,7 @@ class HBNBCommand(cmd.Cmd):
     #     "Amenity",
     #     "Review"
     # }
+
     def do_quit(self, arg):
         """ quit the command interpreter """
         return True
@@ -78,7 +79,8 @@ class HBNBCommand(cmd.Cmd):
             3 - and prints the id.
         """
         new_arg = parse(arg)
-        print(HBNBCommand.__classes)
+        # we can us print(HBNBCommand.__classes) to see
+        # content of the __classes we just created
         if len(arg) == 0:
             print("** class name missing **")
             return
@@ -105,9 +107,9 @@ class HBNBCommand(cmd.Cmd):
         """ Prints the string representation of
             an instance based on the class name and id
         """
-        new_arg = parce(arg)
+        new_arg = parse(arg)
         # If the class name is missing, print ** class name missing **
-        if len(new_arg[0]) == 0:
+        if len(new_arg) == 0:
             print("** class name missing **")
         # If the cls name doesn’t exist, print ** class doesn't exist
         # __** (ex: $ show MyModel)
@@ -122,20 +124,42 @@ class HBNBCommand(cmd.Cmd):
         elif "{}.{}".format(new_arg[0], new_arg[1]) not in storage.all():
             print("** no instance found **")
         else:
-            # print(FileStorage.__objects["{}.{}".format(new_arg[0], new_arg[1])])
+            # print(FileStorage.__objects["{}.{}".format
+            # (new_arg[0], new_arg[1])])
             # we can use the above or the bellow
             print(storage.all()["{}.{}".format(new_arg[0], new_arg[1])])
-    def do_show(self, arg):
+
+    def do_destroy(self, arg):
         """ Deletes an instance based on the class name
             and id (save the change into the JSON file)
         """
         new_arg = parse(arg)
+        if len(new_arg) == 0:
+            print("** class name missing **")
+        elif new_arg[0] not in HBNBCommand.__classes:
+            print("** instance id missing **")
+        elif len(new_arg) == 1:
+            print("** instance id missing **")
+        elif "{}.{}".format(new_arg[0], new_arg[1]) not in storage.all():
+            print("** no instance found **")
+        else:
+            all_obj = storage.all()
+            key = "{}.{}".format(new_arg[0], new_arg[1])
+            del all_obj[key]
+            print("destroyed")
 
     def do_all(self, arg):
         """ Prints all string representation of all
             instances based or not on the class name
         """
-        pass
+        new_arg = parse(arg)
+        if new_arg:
+            if str(new_arg[0]) != "BaseModel":
+                print("** class doesn't exist **")
+            else:
+                print(storage.all())
+        else:
+            print([storage.all()])
 
     def do_update(self, arg):
         """ Updates an instance based on the class
