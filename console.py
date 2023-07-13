@@ -119,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         # If the inst of the cls name doesn’t exist for the id,
         # __print ** no instance found **
-        elif f"{new_arg[0]}.{new_arg[1]}" not in storage.all():
+        elif "{}.{}".format(new_arg[0], new_arg[1]) not in storage.all():
             print("** no instance found **")
         else:
             # print(FileStorage.__objects["{}.{}".format(new_arg[0], new_arg[1])])
