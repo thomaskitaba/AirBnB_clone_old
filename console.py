@@ -29,15 +29,14 @@ def parse(arg):
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
-    classes = [
-        "BaseModel",
-        "User",
-        "State",
-        "City",
-        "Place",
-        "Amenity",
-        "Review"
-    ]
+    # get all subclasses of BaseModel
+    subclasses = BaseModel.__subclasses__()
+    # output>>>
+    __classes = [sub.__name__ for sub in subclasses]
+    # append "BaseModel" to classes
+    # output>>> classes = ["User", "State", City",
+    # "Place", "Amenity", "Review"]
+    __classes.append("BaseModel")
 
     def do_quit(self, arg):
         """ quit the command interpreter """
@@ -56,6 +55,7 @@ class HBNBCommand(cmd.Cmd):
             2 - saves it (to the JSON file)
             3 - and prints the id.
         """
+        new_arg = parse(arg)
         if len(arg) == 0:
             print("** class name missing **")
             return
@@ -67,6 +67,8 @@ class HBNBCommand(cmd.Cmd):
         # except Exception as e:
         #     print("** class doesn't exist **")
         # -------------------------------------
+        if arg[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
 
     def do_show(self, arg):
         """ Prints the string representation of
