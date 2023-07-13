@@ -1,10 +1,12 @@
 # AirBnB_clone
-Part 1 :  AirBnB_clone 
-0x00. AirBnB CLONE - The console
+**Part 1 :  AirBnB_clone 
+0x00. AirBnB CLONE - The console**
 As aspiring Software Engineers at ALX Software Engineering Programme, we are required to create an AirBnB Clone. The planning of the AirBnB clone has already been done by the ALX Team and students are only expected to replicate it by following a set of instructions. 
 The first step to developing this web application is to create a Command Line Interpreter (CLI) to help us manage the Air BnB project’s objects. Creating the Command Line Interpreter is very important because it will pave the way for building and including static and dynamic contents: HTML/CSS/JS templates, DB storage, File Storage, API (Application Programming Interface) and Front-End Integration.
-What is a Command Line Interpreter (CLI)?
-A CLI is a text-based User-Interface (UI) that runs commands and programmes it by managing computer files and interacting with the computer. we  are expected to be able to manage the objects of the project by:
+
+
+**What is a Command Line Interpreter (CLI)?
+**A CLI is a text-based User-Interface (UI) that runs commands and programmes it by managing computer files and interacting with the computer. we  are expected to be able to manage the objects of the project by:
 Creating a new object (ex: a new User or a new Place)
 Retrieving an object from a file, a database etc…
 Doing operations on objects (count, compute stats, etc…)
@@ -62,7 +64,7 @@ Solution Testing
 Deployment
 Maintenance
 Note: The problem definition, requirements are already done for us. We only need to design a clone of the original using our own design, implement our code with our choice programming language which in this project is Python Programming Language and test our implementations using Python's unittest module.
-Classes Needed in this Project
+**Classes Needed in this Project**
 The classes needed in this project include:
 Public Instance Attributes
 Public Instance Methods
