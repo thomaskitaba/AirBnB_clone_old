@@ -236,7 +236,7 @@ To remove a model from the flat file database,
 The program is interactive and the documentation from the help file is leading enough.
 
 **Authors
-**Thomas Kitaba <thomas.kitaba@gmail.com>
+**Thomas Kitaba <thomas.kitaba@gmail.com>,
 Hauwa Abdulkadir <ahauwa48@yahoo.com>
 
 
