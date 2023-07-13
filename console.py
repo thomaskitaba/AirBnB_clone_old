@@ -29,7 +29,7 @@ def parse(arg):
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
-    __classes = [
+    classes = [
         "BaseModel",
         "User",
         "State",
@@ -59,12 +59,14 @@ class HBNBCommand(cmd.Cmd):
         if len(arg) == 0:
             print("** class name missing **")
             return
-        try:
-            bm1 = eval(arg)()
-            models.storage.save()
-            print(bm1)
-        except Exception as e:
-            print("** class doesn't exist **")
+        # -----we can also use this code -----
+        # try:
+        #     bm1 = eval(arg)()
+        #     models.storage.save()
+        #     print(bm1)
+        # except Exception as e:
+        #     print("** class doesn't exist **")
+        # -------------------------------------
 
     def do_show(self, arg):
         """ Prints the string representation of

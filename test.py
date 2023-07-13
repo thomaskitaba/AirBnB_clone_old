@@ -16,8 +16,8 @@ class ChildBase2(Base):
         self.c2_id = uuid4()
 
 print("1 ==============================")
-if Base.ChildBase:
-    print ("True")
+subclasses = Base.__subclasses__()
+print (subclasses)
 print("end of 1---------------------------")
 
 print(datetime.now().isoformat())
