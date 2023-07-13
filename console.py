@@ -18,6 +18,7 @@ from models.review import Review
 
 
 # TODO: will be replaced latter
+# TODO: Borrowed code
 def parse(arg):
     curly_braces = re.search(r"\{(.*?)\}", arg)
     brackets = re.search(r"\[(.*?)\]", arg)
@@ -104,22 +105,26 @@ class HBNBCommand(cmd.Cmd):
         """ Prints the string representation of
             an instance based on the class name and id
         """
+        new_arg = parce(arg)
         # If the class name is missing, print ** class name missing **
-        if len(arg[0]) == 0:
+        if len(new_arg[0]) == 0:
             print("** class name missing **")
-            return
         # If the cls name doesn’t exist, print ** class doesn't exist
         # __** (ex: $ show MyModel)
-        pass
+        elif new_arg[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
         # If the id is missing, print ** instance id missing **
         # __(ex: $ show BaseModel)
-        if len(arg[1]) == 0:
-            print("** class name missing **")
-            return
+        elif len(new_arg) == 1:
+            print("** instance id missing **")
         # If the inst of the cls name doesn’t exist for the id,
         # __print ** no instance found **
-        pass
-
+        elif f"{new_arg[0]}.{new_arg[1]}" not in storage.all():
+            print("** no instance found **")
+        else:
+            # print(FileStorage.__objects["{}.{}".format(new_arg[0], new_arg[1])])
+            # we can use the above or the bellow
+            print(storage.all()["{}.{}".format(new_arg[0], new_arg[1])])
     def do_show(self, arg):
         """ Deletes an instance based on the class name
             and id (save the change into the JSON file)
