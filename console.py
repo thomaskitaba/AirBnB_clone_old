@@ -157,7 +157,7 @@ class HBNBCommand(cmd.Cmd):
             if str(new_arg[0]) != "BaseModel":
                 print("** class doesn't exist **")
             else:
-                print(storage.all())
+                print([storage.all()])
         else:
             print([storage.all()])
 
