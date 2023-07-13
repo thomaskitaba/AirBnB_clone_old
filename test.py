@@ -13,7 +13,7 @@ class ChildBase(Base):
         self.c_id = uuid4()
 
 print("1 ==============================")
-print(Base.__classes)
+print(Base.ChildBase)
 print("end of 1---------------------------")
 
 print(datetime.now().isoformat())
