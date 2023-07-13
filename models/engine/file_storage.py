@@ -50,8 +50,6 @@ class FileStorage:
                     # it will be generated every time we use to_dict()
                     del dict_val["__class__"]
                     self.new(eval(cls_name)(**dict_val))
-
-
         except Exception as e:
             # except FileNotFoundError:
             return

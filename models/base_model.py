@@ -47,7 +47,8 @@ class BaseModel:
         #     "name": self.name,
         #     "__class__": self.__class__.__name__
         # }
-        # or
+        # limitation of the above is if my_number or name is not set
+        # then accessing them in later stages will raise error
         temp_dict = self.__dict__.copy()
         temp_dict["created_at"] = temp_dict["created_at"].isoformat()
         temp_dict["updated_at"] = temp_dict["updated_at"].isoformat()
