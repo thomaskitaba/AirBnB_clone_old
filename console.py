@@ -77,23 +77,25 @@ class HBNBCommand(cmd.Cmd):
         print(HBNBCommand.__classes)
         if len(arg) == 0:
             print("** class name missing **")
-        # -----we can also use this code -----
-        # try:
-        #     bm1 = eval(arg)()
-        #     models.storage.save()
-        #     print(bm1)
-        # except Exception as e:
-        #     print("** class doesn't exist **")
+            return
+        # ----- We can also use this
+        try:
+            bm1 = eval(new_arg[0])()
+            storage.save()
+            # print(bm1.__class__.__name__)
+            print(bm1.id)
+        except NameError:
+            print("** class doesn't exist **")
         # -------------------------------------
 
-        elif new_arg[0] not in HBNBCommand.__classes:
-            print("** class doesn't exist **")
-        else:
-            bm1 = eval(new_arg[0])()
-            print(bm1.id)
-            # or in short
-            # print(eval(new_arg[0])().id)
-            storage.save()
+        # elif new_arg[0] not in HBNBCommand.__classes:
+        #     print("** class doesn't exist **")
+        # else:
+        #     bm1 = eval(new_arg[0])()
+        #     print(bm1.id)
+        #     # or in short
+        #     # print(eval(new_arg[0])().id)
+        #     storage.save()
 
     def do_show(self, arg):
         """ Prints the string representation of
