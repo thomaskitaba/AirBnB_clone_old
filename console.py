@@ -231,6 +231,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(new_arg) == 3:
             print("** value missing **")
         elif len(new_arg) == 4:
+            # TODO: Borrowed Code
             obj = objdict["{}.{}".format(argl[0], argl[1])]
             if argl[2] in obj.__class__.__dict__.keys():
                 valtype = type(obj.__class__.__dict__[argl[2]])
