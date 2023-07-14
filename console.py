@@ -73,6 +73,12 @@ class HBNBCommand(cmd.Cmd):
         # match = re.search(r"\((.*?)\)", arg2)
         # argl = [arg2[:match.span()[0]], match.group()[1:-1]]
         # print(argl)
+        commands = { "all": self.do_all,
+                    "count": self.do_all,
+                    "show": self.do_show,
+                    "destroy": self.do_destroy,
+                    "update": self.do_update
+                    }
         match = re.search(r"\.", arg)
         if match:
             new_arg = [arg[:match.span()[0]], arg[match.span()[1]:]]
@@ -80,7 +86,11 @@ class HBNBCommand(cmd.Cmd):
             match = re.search(r"\((.*?)\)", new_arg[1])
             if match:
                 sub_arg = [new_arg[1][:match.span()[0]], match.group()[1:-1]]
-                print(sub_arg)
+                # print(sub_arg)    #   test print
+                if sub_arg[0] in commands:
+                    to_be_passed = "{} {}".format(new_arg[0], sub_arg[1])
+                    #  print(to_be_passed)  # test print
+                    return commands[sub_arg[0]](to_be_passed)
         else:
             print("Unknown syntax: {}".format(arg))
 
@@ -157,12 +167,6 @@ class HBNBCommand(cmd.Cmd):
         """ Deletes an instance based on the class name
             and id (save the change into the JSON file)
         """
-        commands = { "all": self.do_all,
-                    "count": self.do_all,
-                    "show": self.do_show,
-                    "destroy": self.do_destroy,
-                    "update": self.do_update
-                    }
         new_arg = parse(arg)
         if len(new_arg) == 0:
             print("** class name missing **")
@@ -197,7 +201,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, arg):
         """ count number of class instances """
-        new_arg = parse()
+        new_arg = parse(arg)
         count = 0
         all_objs = storage.all()
         for key in all_objs:
