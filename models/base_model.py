@@ -22,7 +22,7 @@ class BaseModel:
                     self.id = val
         else:
             models.storage.new(self)
-
+        models.storage.save()
     def __str__(self):
         """ __str__ """
         c_name = self.__class__.__name__

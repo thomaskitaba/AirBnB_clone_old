@@ -17,8 +17,8 @@ from models.review import Review
 """
 
 
-# TODO: will be replaced latter
-# TODO: Borrowed code
+# Temporary will be replaced latter
+# Temporary code
 def parse(arg):
     curly_braces = re.search(r"\{(.*?)\}", arg)
     brackets = re.search(r"\[(.*?)\]", arg)
@@ -71,8 +71,8 @@ class HBNBCommand(cmd.Cmd):
         """ default action """
         # arg2 = "do_something(arg1, arg2)"
         # match = re.search(r"\((.*?)\)", arg2)
-        # argl = [arg2[:match.span()[0]], match.group()[1:-1]]
-        # print(argl)
+        # new_arg = [arg2[:match.span()[0]], match.group()[1:-1]]
+        # print(new_arg)
         commands = { "all": self.do_all,
                     "count": self.do_all,
                     "show": self.do_show,
@@ -215,6 +215,8 @@ class HBNBCommand(cmd.Cmd):
             update <class name> <id> <attribute name> "<attribute value>"
         """
         new_arg = parse(arg)
+        new_arg = parse(arg)
+        all_objs = storage.all()
         all_objs = storage.all()
 
         if len(new_arg) == 0:
@@ -231,16 +233,17 @@ class HBNBCommand(cmd.Cmd):
         elif len(new_arg) == 3:
             print("** value missing **")
         elif len(new_arg) == 4:
-            # TODO: Borrowed Code
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            if argl[2] in obj.__class__.__dict__.keys():
-                valtype = type(obj.__class__.__dict__[argl[2]])
-                obj.__dict__[argl[2]] = valtype(argl[3])
+
+            # Temporary Code
+            obj = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
+            if new_arg[2] in obj.__class__.__dict__.keys():
+                valtype = type(obj.__class__.__dict__[new_arg[2]])
+                obj.__dict__[new_arg[2]] = valtype(new_arg[3])
             else:
-                obj.__dict__[argl[2]] = argl[3]
-        elif type(eval(argl[2])) == dict:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            for k, v in eval(argl[2]).items():
+                obj.__dict__[new_arg[2]] = new_arg[3]
+        elif type(eval(new_arg[2])) == dict:
+            obj = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
+            for k, v in eval(new_arg[2]).items():
                 if (k in obj.__class__.__dict__.keys() and
                         type(obj.__class__.__dict__[k]) in {str, int, float}):
                     valtype = type(obj.__class__.__dict__[k])
