@@ -60,6 +60,7 @@ class HBNBCommand(cmd.Cmd):
     #     "Amenity",
     #     "Review"
     # }
+
     def emptyline(self):
         """ not to send arg to default method
             when empty line is entered
@@ -79,10 +80,9 @@ class HBNBCommand(cmd.Cmd):
             match = re.search(r"\((.*?)\)", new_arg[1])
             if match:
                 sub_arg = [new_arg[1][:match.span()[0]], match.group()[1:-1]]
-            print(sub_arg)
+                print(sub_arg)
         else:
             print("Unknown syntax: {}".format(arg))
-
 
     def do_quit(self, arg):
         """ quit the command interpreter """
@@ -178,7 +178,7 @@ class HBNBCommand(cmd.Cmd):
         """
         new_arg = parse(arg)
         if len(new_arg) > 0 and new_arg[0] not in HBNBCommand.__classes:
-               print("** class doesn't exist **")
+            print("** class doesn't exist **")
         else:
             all_objs = storage.all()
             output_objs = []
