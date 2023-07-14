@@ -108,29 +108,29 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         # ----- We can also use this
-        try:
-            bm1 = eval(new_arg[0])()
-            storage.save()
-            # print(bm1.__class__.__name__)
-            print(bm1.id)
-        except NameError:
-            print("** class doesn't exist **")
+        # try:
+        #     bm1 = eval(new_arg[0])()
+        #     storage.save()
+        #     # print(bm1.__class__.__name__)
+        #     print(bm1.id)
+        # except NameError:
+        #     print("** class doesn't exist **")
         # -------------------------------------
 
-        # elif new_arg[0] not in HBNBCommand.__classes:
-        #     print("** class doesn't exist **")
-        # else:
-        #     bm1 = eval(new_arg[0])()
-        #     print(bm1.id)
-        #     # or in short
-        #     # print(eval(new_arg[0])().id)
+        elif new_arg[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+        else:
+            bm1 = eval(new_arg[0])()
+            print(bm1.id)
+            # or in short
+            # print(eval(new_arg[0])().id)
         storage.save()
 
     def do_show(self, arg):
         """ Prints the string representation of
             an instance based on the class name and id
         """
-        print(storage.all())
+        # print(storage.all())
         new_arg = parse(arg)
         # If the class name is missing, print ** class name missing **
         if len(new_arg) == 0:
@@ -157,6 +157,12 @@ class HBNBCommand(cmd.Cmd):
         """ Deletes an instance based on the class name
             and id (save the change into the JSON file)
         """
+        commands = { "all": self.do_all,
+                    "count": self.do_all,
+                    "show": self.do_show,
+                    "destroy": self.do_destroy,
+                    "update": self.do_update
+                    }
         new_arg = parse(arg)
         if len(new_arg) == 0:
             print("** class name missing **")
@@ -188,6 +194,16 @@ class HBNBCommand(cmd.Cmd):
                 elif all_objs[obj].__class__.__name__ == new_arg[0]:
                     output_objs.append(all_objs[obj].__str__())
             print(output_objs)
+
+    def do_count(self, arg):
+        """ count number of class instances """
+        new_arg = parse()
+        count = 0
+        all_objs = storage.all()
+        for key in all_objs:
+            if all_objs[key].__class__.__name__ == new_arg[0]:
+                count += 1
+        print(count)
 
     def do_update(self, arg):
         """ Updates an instance based on the class
