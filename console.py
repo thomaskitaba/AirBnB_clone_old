@@ -114,9 +114,8 @@ class HBNBCommand(cmd.Cmd):
         new_arg = parse(arg)
         # we can us print(HBNBCommand.__classes) to see
         # content of the __classes we just created
-        if len(arg) == 0:
+        if len(new_arg) == 0:
             print("** class name missing **")
-            return
         # ----- We can also use this
         # try:
         #     bm1 = eval(new_arg[0])()
@@ -134,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
             print(bm1.id)
             # or in short
             # print(eval(new_arg[0])().id)
-        storage.save()
+            storage.save()
 
     def do_show(self, arg):
         """ Prints the string representation of
@@ -213,8 +212,26 @@ class HBNBCommand(cmd.Cmd):
         """ Updates an instance based on the class
             name and id by adding or updating attribute
             (save the change into the JSON file)
+            update <class name> <id> <attribute name> "<attribute value>"
         """
-        pass
+        new_arg = parse(arg)
+        all_objs = storage.all()
+
+        if len(new_arg) == 0:
+            print("** class name missing **")
+        elif new_arg[0] not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+        elif len(new_arg) == 1:
+            print("** instance id missing **")
+        #elif all(all_objs[new_arg[1]] != obj for obj in all_objs.values()):
+        elif "{}.{}".format(new_arg[0], new_arg[1]) not in all_objs.keys():
+            print("** instance id missing **")
+        elif len(new_arg) == 2:
+            print("** attribute name missing **")
+        elif len(new_arg) == 3:
+            print("** value missing **")
+        else:
+            print("update {}".format(new_arg[0]))
 
 
 if __name__ == '__main__':

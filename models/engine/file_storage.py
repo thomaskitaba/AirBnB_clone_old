@@ -27,7 +27,7 @@ class FileStorage:
             temp_dict[obj] = FileStorage.__objects[obj].to_dict()
             # >>> temp_dict = {'ob.11': {'id': 11, 'name': aa,...},
             # {'id': 11, 'name': aa,...},...}
-        with open(FileStorage.__file_path, 'w') as db_f:
+        with open(FileStorage.__file_path, "w") as db_f:
             json_text = json.dumps(temp_dict)
             db_f.write(json_text)
             # or we can use json.dumps(FileStorage.__objects, db_f)
