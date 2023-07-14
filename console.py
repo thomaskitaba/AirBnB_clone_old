@@ -68,10 +68,21 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, arg):
         """ default action """
-        arg2 = "do_something(arg1, arg2)"
-        match = re.search(r"\((.*?)\)", arg2)
-        argl = [arg2[:match.span()[0]], arg2[match.span()[1]:-1]]
-        print(argl)
+        # arg2 = "do_something(arg1, arg2)"
+        # match = re.search(r"\((.*?)\)", arg2)
+        # argl = [arg2[:match.span()[0]], match.group()[1:-1]]
+        # print(argl)
+        match = re.search(r"\.", arg)
+        if match:
+            new_arg = [arg[:match.span()[0]], arg[match.span()[1]:]]
+            print(new_arg)
+            match = re.search(r"\((.*?)\)", new_arg[1])
+            if match:
+                sub_arg = [new_arg[1][:match.span()[0]], match.group()[1:-1]]
+            print(sub_arg)
+        else:
+            print("Unknown syntax: {}".format(arg))
+
 
     def do_quit(self, arg):
         """ quit the command interpreter """
@@ -119,6 +130,7 @@ class HBNBCommand(cmd.Cmd):
         """ Prints the string representation of
             an instance based on the class name and id
         """
+        print(storage.all())
         new_arg = parse(arg)
         # If the class name is missing, print ** class name missing **
         if len(new_arg) == 0:
