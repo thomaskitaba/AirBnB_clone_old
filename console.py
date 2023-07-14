@@ -230,8 +230,9 @@ class HBNBCommand(cmd.Cmd):
             print("** attribute name missing **")
         elif len(new_arg) == 3:
             print("** value missing **")
-        else:
+        elif len(new_arg) == 4:
             print("update {}".format(new_arg[0]))
+            storage.save()
 
 
 if __name__ == '__main__':
