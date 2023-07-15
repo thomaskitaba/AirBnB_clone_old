@@ -1,1 +1,1 @@
-{"BaseModel.a6905fe9-a99c-4fdd-b29d-b65e5b78578b": {"id": "a6905fe9-a99c-4fdd-b29d-b65e5b78578b", "created_at": "2023-07-14T23:11:07.324885", "updated_at": "2023-07-14T23:11:07.324898", "__class__": "BaseModel"}}
+{"User.789bc3fb-823f-44c2-a03a-ebadc7e65362": {"id": "789bc3fb-823f-44c2-a03a-ebadc7e65362", "created_at": "2023-07-15T14:20:48.586777", "updated_at": "2023-07-15T14:20:48.587803", "email": "thomas.kitaba@gmail.com", "__class__": "User"}}

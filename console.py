@@ -73,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
         # match = re.search(r"\((.*?)\)", arg2)
         # new_arg = [arg2[:match.span()[0]], match.group()[1:-1]]
         # print(new_arg)
-        commands = { "all": self.do_all,
+        commands = {"all": self.do_all,
                     "count": self.do_all,
                     "show": self.do_show,
                     "destroy": self.do_destroy,
@@ -82,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
         match = re.search(r"\.", arg)
         if match:
             new_arg = [arg[:match.span()[0]], arg[match.span()[1]:]]
-            print(new_arg)
+            # print(new_arg) test print
             match = re.search(r"\((.*?)\)", new_arg[1])
             if match:
                 sub_arg = [new_arg[1][:match.span()[0]], match.group()[1:-1]]
@@ -218,14 +218,14 @@ class HBNBCommand(cmd.Cmd):
         new_arg = parse(arg)
         all_objs = storage.all()
         all_objs = storage.all()
-
+        #   print(storage.all())    # test print
         if len(new_arg) == 0:
             print("** class name missing **")
         elif new_arg[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         elif len(new_arg) == 1:
             print("** instance id missing **")
-        #elif all(all_objs[new_arg[1]] != obj for obj in all_objs.values()):
+        # elif all(all_objs[new_arg[1]] != obj for obj in all_objs.values()):
         elif "{}.{}".format(new_arg[0], new_arg[1]) not in all_objs.keys():
             print("** instance id missing **")
         elif len(new_arg) == 2:
@@ -233,23 +233,48 @@ class HBNBCommand(cmd.Cmd):
         elif len(new_arg) == 3:
             print("** value missing **")
         elif len(new_arg) == 4:
+            # <class name> <id> <attribute name> "<attribute value>
+            # all_objs = storage.all()
+            # obj_key = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
+
+            # if new_arg[2] in obj_key.to_dict():
+            #     obj_type = type(obj_key.to_dict()[new_arg[2]])
+            #     obj_key.to_dict()[new_arg[2]] = obj_type(new_arg[3])
+            # else:
+            #     obj_key.to_dict()[new_arg[2]] = new_arg[3]
 
             # Temporary Code
             obj = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
-            if new_arg[2] in obj.__class__.__dict__.keys():
-                valtype = type(obj.__class__.__dict__[new_arg[2]])
+            if new_arg[2] in obj.to_dict().keys():
+                valtype = type(obj.to_dict()[new_arg[2]])
                 obj.__dict__[new_arg[2]] = valtype(new_arg[3])
             else:
                 obj.__dict__[new_arg[2]] = new_arg[3]
         elif type(eval(new_arg[2])) == dict:
             obj = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
             for k, v in eval(new_arg[2]).items():
-                if (k in obj.__class__.__dict__.keys() and
-                        type(obj.__class__.__dict__[k]) in {str, int, float}):
-                    valtype = type(obj.__class__.__dict__[k])
+                if (k in obj.to_dict().keys() and
+                  type(obj.to_dict()[k]) in {str, int, float}):
+                    valtype = type(obj.to_dict()[k])
                     obj.__dict__[k] = valtype(v)
                 else:
                     obj.__dict__[k] = v
+
+        #     obj = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
+        #     if new_arg[2] in obj.__class__.__dict__.keys():
+        #         valtype = type(obj.__class__.__dict__[new_arg[2]])
+        #         obj.__dict__[new_arg[2]] = valtype(new_arg[3])
+        #     else:
+        #         obj.__dict__[new_arg[2]] = new_arg[3]
+        # elif type(eval(new_arg[2])) == dict:
+        #     obj = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
+        #     for k, v in eval(new_arg[2]).items():
+        #         if (k in obj.__class__.__dict__.keys() and
+        #         type(obj.__class__.__dict__[k]) in {str, int, float}):
+        #             valtype = type(obj.__class__.__dict__[k])
+        #             obj.__dict__[k] = valtype(v)
+        #         else:
+        #             obj.__dict__[k] = v
         storage.save()
 
 
