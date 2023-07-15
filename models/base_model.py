@@ -12,6 +12,7 @@ class BaseModel:
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
+        models.storage.new(self)
         if kwargs:
             for key, val in kwargs.items():
                 if kwargs[key] == "created_at":
@@ -22,7 +23,7 @@ class BaseModel:
                     self.id = val
         else:
             models.storage.new(self)
-        models.storage.save()
+
     def __str__(self):
         """ __str__ """
         c_name = self.__class__.__name__
