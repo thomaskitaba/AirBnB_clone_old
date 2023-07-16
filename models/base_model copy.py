@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ base_model """
-import models
+from models import storge
 import uuid
 from datetime import datetime
 
@@ -17,7 +17,7 @@ class BaseModel:
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
-        models.storage.new(self)
+        storage.new(self)
         if kwargs:
             for key, val in kwargs.items():
                 if kwargs[key] == "created_at":
@@ -27,7 +27,7 @@ class BaseModel:
                 elif kwargs[key] == "id":
                     self.id = val
         else:
-            models.storage.new(self)
+            storage.new(self)
 
     def __str__(self):
         """ __str__ """
