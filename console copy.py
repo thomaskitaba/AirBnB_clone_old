@@ -94,6 +94,7 @@ class HBNBCommand(cmd.Cmd):
                     return commands[sub_arg[0]](to_be_passed)
         else:
             print("Unknown syntax: {}".format(arg))
+            return False
 
     def do_quit(self, arg):
         """ quit the command interpreter """

@@ -1,20 +1,18 @@
 #!/usr/bin/python3
+""" console.py entry point ot the
+    command interpreter
+"""
 import cmd
 import re
 from shlex import split
-import string
 from models import storage
 from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
 from models.user import User
 from models.state import State
 from models.city import City
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
-""" console.py entry point ot the
-    command interpreter
-"""
 
 
 def parse(arg):
@@ -36,9 +34,8 @@ def parse(arg):
 
 
 class HBNBCommand(cmd.Cmd):
-    """Defines the HolbertonBnB command interpreter.
-    Attributes:
-        prompt (str): The command prompt.
+    """ Holberton Command interpretor
+        using cmd module
     """
 
     prompt = "(hbnb) "
@@ -57,14 +54,17 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def default(self, arg):
-        """Default behavior for cmd module when input is invalid"""
-        argdict = {
-            "all": self.do_all,
-            "show": self.do_show,
-            "destroy": self.do_destroy,
-            "count": self.do_count,
-            "update": self.do_update
-        }
+        """ default action """
+        # arg2 = "do_something(arg1, arg2)"
+        # match = re.search(r"\((.*?)\)", arg2)
+        # new_arg = [arg2[:match.span()[0]], match.group()[1:-1]]
+        # print(new_arg)
+        commands = {"all": self.do_all,
+                    "count": self.do_all,
+                    "show": self.do_show,
+                    "destroy": self.do_destroy,
+                    "update": self.do_update
+                    }
         match = re.search(r"\.", arg)
         if match:
             new_arg = [arg[:match.span()[0]], arg[match.span()[1]:]]
@@ -79,7 +79,7 @@ class HBNBCommand(cmd.Cmd):
                     return commands[sub_arg[0]](to_be_passed)
         else:
             print("Unknown syntax: {}".format(arg))
-        return False
+            return False
 
     def do_quit(self, arg):
         """Quit command to exit the program."""
@@ -91,8 +91,9 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, arg):
-        """Usage: create <class>
-        Create a new class instance and print its id.
+        """ 1- Creates a new instance of BaseModel,
+            2 - saves it (to the JSON file)
+            3 - and prints the id.
         """
         new_arg = parse(arg)
         # we can us print(HBNBCommand.__classes) to see
