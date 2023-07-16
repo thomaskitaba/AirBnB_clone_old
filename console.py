@@ -19,22 +19,22 @@ from models.review import Review
 
 # Temporary will be replaced latter
 # Temporary code
-# def parse(arg):
-#     curly_braces = re.search(r"\{(.*?)\}", arg)
-#     brackets = re.search(r"\[(.*?)\]", arg)
-#     if curly_braces is None:
-#         if brackets is None:
-#             return [i.strip(",") for i in split(arg)]
-#         else:
-#             lexer = split(arg[:brackets.span()[0]])
-#             retl = [i.strip(",") for i in lexer]
-#             retl.append(brackets.group())
-#             return retl
-#     else:
-#         lexer = split(arg[:curly_braces.span()[0]])
-#         retl = [i.strip(",") for i in lexer]
-#         retl.append(curly_braces.group())
-#         return retl
+def parse(arg):
+    curly_braces = re.search(r"\{(.*?)\}", arg)
+    brackets = re.search(r"\[(.*?)\]", arg)
+    if curly_braces is None:
+        if brackets is None:
+            return [i.strip(",") for i in split(arg)]
+        else:
+            lexer = split(arg[:brackets.span()[0]])
+            retl = [i.strip(",") for i in lexer]
+            retl.append(brackets.group())
+            return retl
+    else:
+        lexer = split(arg[:curly_braces.span()[0]])
+        retl = [i.strip(",") for i in lexer]
+        retl.append(curly_braces.group())
+        return retl
 
 
 class HBNBCommand(cmd.Cmd):
@@ -105,6 +105,25 @@ class HBNBCommand(cmd.Cmd):
         """
         print('')
         return True
+
+    def do_print(self, arg):
+        """ test """
+        print("storage.all()-> {}".format(storage.all()))
+        for key, value in storage.all().items():
+            print("||||||||||||||||||||||||||")
+            print(f"storage.all()[{key}]")
+            print("---------------------------")
+            print(value)  # returns string representation of obj
+            print(value.to_dict())
+            iterable = value.to_dict()
+            id = '36a6b59a-49a5-4b0c-bda8-b1841958755e'
+            # for k in iterable:
+            #     if iterable["id"] == '36a6b59a-49a5-4b0c-bda8-b1841958755e':
+            #         # iterable[k] = '8a0713f1ac74-25ac-47f6-99a1-53ddc9d6'
+            #         iterable["email"] = "thomas.kitaba@gmail.com"
+            print("updated object")
+            print (iterable)
+            print("||||||||||||||||||||||||||")
 
     def do_create(self, arg):
         """ 1- Creates a new instance of BaseModel,
@@ -254,7 +273,7 @@ class HBNBCommand(cmd.Cmd):
             obj = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
             for k, v in eval(new_arg[2]).items():
                 if (k in obj.to_dict().keys() and
-                  type(obj.to_dict()[k]) in {str, int, float}):
+                   type(obj.to_dict()[k]) in {str, int, float}):
                     valtype = type(obj.to_dict()[k])
                     obj.__dict__[k] = valtype(v)
                 else:
