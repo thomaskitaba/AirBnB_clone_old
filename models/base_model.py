@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ base_model """
-import models
+from models import storage
 import uuid
 from datetime import datetime
 
@@ -9,22 +9,25 @@ class BaseModel:
     """ BaseModel class """
 
     def __init__(self, *args, **kwargs):
-        """ instansiate new base modesl object """
+        """ instantiate new base model object
+            either using values provide using Kwags
+            or without kwargs
+        """
+
+        t_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs is not None and kwargs != {}:
             for key in kwargs:
                 if key == "created_at":
-                    self.__dict__["created_at"] = datetime.strptime(
-                        kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                    self.__dict__[key] = datetime.strptime(kwargs[key], t_format)
                 elif key == "updated_at":
-                    self.__dict__["updated_at"] = datetime.strptime(
-                        kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                    self.__dict__[key] = datetime.strptime(kwargs[key], t_format)
                 else:
                     self.__dict__[key] = kwargs[key]
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-        models.storage.new(self)
+            storage.new(self)
 
     def __str__(self):
         """ __str__ """
@@ -36,7 +39,7 @@ class BaseModel:
     def save(self):
         """ save """
         self.updated_at = datetime.now()
-        models.storage.save()
+        storage.save()
 
     def to_dict(self):
         """Return the dictionary representation of a Rectangle."""
