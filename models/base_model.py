@@ -9,17 +9,20 @@ class BaseModel:
     """ BaseModel class """
     def __init__(self, *args, **kwargs):
         """ instantiate new base model object """
+
         t_format = "%Y-%d-%mT%H:%M:%S.%f"
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
         models.storage.new(self)
         if kwargs is not None and kwargs != {}:
-            for k, v in kwargs.items():
-                if k == "created_at" or k == "updated_at":
-                    self.__dict__[k] = datetime.strptime(v, tform)
-                else:
-                    self.__dict__[k] = v
+            for key, val in kwargs.items():
+                if kwargs[key] == "created_at":
+                    self.created_at = datetime.strptime(val, t_format)
+                elif kwargs[key] == "updated_at":
+                    self.updated_at = datetime.strptime(val, t_format)
+                elif kwargs[key] == "id":
+                    self.id = val
         else:
             models.storage.new(self)
 
