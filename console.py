@@ -155,39 +155,41 @@ class HBNBCommand(cmd.Cmd):
             # we can use the above or the bellow
             print(storage.all()["{}.{}".format(new_arg[0], new_arg[1])])
 
-
     def do_destroy(self, arg):
-        """Usage: destroy <class> <id> or <class>.destroy(<id>)
-        Delete a class instance of a given id."""
-        argl = parse(arg)
-        objdict = storage.all()
-        if len(argl) == 0:
+        """ Deletes an instance based on the class name
+            and id (save the change into the JSON file)
+        """
+        new_arg = parse(arg)
+        if len(new_arg) == 0:
             print("** class name missing **")
-        elif argl[0] not in HBNBCommand.__classes:
-            print("** class doesn't exist **")
-        elif len(argl) == 1:
+        elif new_arg[0] not in HBNBCommand.__classes:
             print("** instance id missing **")
-        elif "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+        elif len(new_arg) == 1:
+            print("** instance id missing **")
+        elif "{}.{}".format(new_arg[0], new_arg[1]) not in storage.all():
             print("** no instance found **")
         else:
-            del objdict["{}.{}".format(argl[0], argl[1])]
+            all_obj = storage.all()
+            key = "{}.{}".format(new_arg[0], new_arg[1])
+            del all_obj[key]
             storage.save()
 
     def do_all(self, arg):
-        """Usage: all or all <class> or <class>.all()
-        Display string representations of all instances of a given class.
-        If no class is specified, displays all instantiated objects."""
-        argl = parse(arg)
-        if len(argl) > 0 and argl[0] not in HBNBCommand.__classes:
+        """ Prints all string representation of all
+            instances based or not on the class name
+        """
+        new_arg = parse(arg)
+        if len(new_arg) > 0 and new_arg[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
-            objl = []
-            for obj in storage.all().values():
-                if len(argl) > 0 and argl[0] == obj.__class__.__name__:
-                    objl.append(obj.__str__())
-                elif len(argl) == 0:
-                    objl.append(obj.__str__())
-            print(objl)
+            all_objs = storage.all()
+            output_objs = []
+            for obj in all_objs:
+                if len(new_arg) == 0:
+                    output_objs.append(all_objs[obj].__str__())
+                elif all_objs[obj].__class__.__name__ == new_arg[0]:
+                    output_objs.append(all_objs[obj].__str__())
+            print(output_objs)
 
     def do_count(self, arg):
         """Usage: count <class> or <class>.count()
