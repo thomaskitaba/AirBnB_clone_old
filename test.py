@@ -40,3 +40,8 @@ for obj in my_dict:
     temp_dict[obj] = my_dict[obj] * 2
 print (my_dict)
 print (temp_dict)
+
+print("===============================")
+print(int.__dict__)
+print("==============================")
+print(b1.__dict__)
