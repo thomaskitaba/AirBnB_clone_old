@@ -10,3 +10,7 @@ class User(BaseModel):
     password = ""  # string - empty string
     first_name = ""  # string - empty string
     last_name = ""  # string - empty string
+
+    def __init__(self, *args, **kwargs):
+        """Instantiation for the User class"""
+        super().__init__(*args, **kwargs)
