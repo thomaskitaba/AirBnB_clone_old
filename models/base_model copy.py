@@ -15,13 +15,13 @@ class BaseModel:
 
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs is not None and kwargs != {}:
-            for key, val in kwargs.items():
+            for key in kwargs:
                 if key == "created_at":
-                    self.__dict__["created_at"] = datetime.strptime(val, t_format)
+                    self.__dict__[key] = datetime.strptime(kwargs[key], t_format)
                 elif key == "updated_at":
-                    self.__dict__["udated_at"] = datetime.strptime(val, t_format)
+                    self.__dict__[key] = datetime.strptime(kwargs[key], t_format)
                 else:
-                    self.__dict__["id"] = val
+                    self.__dict__[key] = kwargs[key]
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
