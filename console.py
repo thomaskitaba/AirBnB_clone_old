@@ -69,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
         # new_arg = [arg2[:match.span()[0]], match.group()[1:-1]]
         # print(new_arg)
         commands = {"all": self.do_all,
-                    "count": self.do_count,
+                    "count": self.do_,
                     "show": self.do_show,
                     "destroy": self.do_destroy,
                     "update": self.do_update
@@ -193,7 +193,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, arg):
         """ count number of class instances """
-        new_arg = parse(arg)
+        new_arg = arg.split(' ')
         count = 0
         all_objs = storage.all()
         for key in all_objs:
@@ -208,6 +208,7 @@ class HBNBCommand(cmd.Cmd):
             update <class name> <id> <attribute name> "<attribute value>"
         """
         new_arg = parse(arg)
+        all_objs = storage.all()
         all_objs = storage.all()
         #   print(storage.all())    # test print
         if len(new_arg) == 0:
