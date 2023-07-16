@@ -17,12 +17,12 @@ class BaseModel:
         models.storage.new(self)
         if kwargs is not None and kwargs != {}:
             for key, val in kwargs.items():
-                if kwargs[key] == "created_at":
+                if key == "created_at":
                     self.__dict__["created_at"]= datetime.strptime(val, t_format)
-                elif kwargs[key] == "updated_at":
+                elif key == "updated_at":
                     self.__dict__["updated_at"] = datetime.strptime(val, t_format)
                 elif
-                    self.__dict__[id] = val
+                    self.__dict__[key] = val
         else:
             models.storage.new(self)
 
