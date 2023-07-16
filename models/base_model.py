@@ -16,13 +16,11 @@ class BaseModel:
         self.updated_at = datetime.now()
         models.storage.new(self)
         if len(kwargs) != 0:
-            for key, val in kwargs.items():
-                if kwargs[key] == "created_at":
-                    self.created_at = datetime.strptime(val, t_format)
-                elif kwargs[key] == "updated_at":
-                    self.updated_at = datetime.strptime(val, t_format)
+            for k, v in kwargs.items():
+                if k == "created_at" or k == "updated_at":
+                    self.__dict__[k] = datetime.strptime(v, tform)
                 else:
-                    self.id = val
+                    self.__dict__[k] = v
         else:
             models.storage.new(self)
 
