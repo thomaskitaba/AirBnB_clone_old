@@ -15,7 +15,7 @@ class BaseModel:
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
         models.storage.new(self)
-        if kwargs:
+        if len(kwargs) != 0:
             for key, val in kwargs.items():
                 if kwargs[key] == "created_at":
                     self.created_at = datetime.strptime(val, t_format)
