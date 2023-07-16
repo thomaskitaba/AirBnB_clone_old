@@ -122,7 +122,7 @@ class HBNBCommand(cmd.Cmd):
             #         # iterable[k] = '8a0713f1ac74-25ac-47f6-99a1-53ddc9d6'
             #         iterable["email"] = "thomas.kitaba@gmail.com"
             print("updated object")
-            print (iterable)
+            print(iterable)
             print("||||||||||||||||||||||||||")
 
     def do_create(self, arg):
