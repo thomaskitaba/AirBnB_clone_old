@@ -25,6 +25,7 @@ class BaseModel:
                         kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
                 else:
                     self.__dict__[key] = kwargs[key]
+            models.storage.new(self)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
