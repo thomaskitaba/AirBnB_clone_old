@@ -11,9 +11,7 @@ class BaseModel:
         """ instantiate new base model object """
 
         t_format = "%Y-%d-%mT%H:%M:%S.%f"
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+
         if kwargs is not None and kwargs != {}:
             for key, val in kwargs.items():
                 if key == "created_at":
@@ -23,6 +21,9 @@ class BaseModel:
                 elif
                     self.__dict__[key] = val
         else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
             models.storage.new(self)
 
     def __str__(self):
