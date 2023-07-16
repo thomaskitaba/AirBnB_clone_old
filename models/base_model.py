@@ -21,7 +21,7 @@ class BaseModel:
                     self.created_at = datetime.strptime(val, t_format)
                 elif kwargs[key] == "updated_at":
                     self.updated_at = datetime.strptime(val, t_format)
-                elif kwargs[key] == "id":
+                else:
                     self.id = val
         else:
             models.storage.new(self)
