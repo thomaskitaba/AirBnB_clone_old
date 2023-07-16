@@ -1,16 +1,20 @@
 #!/usr/bin/python3
-"""Defines the HBnB console."""
 import cmd
 import re
 from shlex import split
+import string
 from models import storage
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 from models.user import User
 from models.state import State
 from models.city import City
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
+""" console.py entry point ot the
+    command interpreter
+"""
 
 
 def parse(arg):
@@ -62,15 +66,19 @@ class HBNBCommand(cmd.Cmd):
             "update": self.do_update
         }
         match = re.search(r"\.", arg)
-        if match is not None:
-            argl = [arg[:match.span()[0]], arg[match.span()[1]:]]
-            match = re.search(r"\((.*?)\)", argl[1])
-            if match is not None:
-                command = [argl[1][:match.span()[0]], match.group()[1:-1]]
-                if command[0] in argdict.keys():
-                    call = "{} {}".format(argl[0], command[1])
-                    return argdict[command[0]](call)
-        print("*** Unknown syntax: {}".format(arg))
+        if match:
+            new_arg = [arg[:match.span()[0]], arg[match.span()[1]:]]
+            # print(new_arg) test print
+            match = re.search(r"\((.*?)\)", new_arg[1])
+            if match:
+                sub_arg = [new_arg[1][:match.span()[0]], match.group()[1:-1]]
+                # print(sub_arg)    #   test print
+                if sub_arg[0] in commands:
+                    to_be_passed = "{} {}".format(new_arg[0], sub_arg[1])
+                    #  print(to_be_passed)  # test print
+                    return commands[sub_arg[0]](to_be_passed)
+        else:
+            print("Unknown syntax: {}".format(arg))
         return False
 
     def do_quit(self, arg):
@@ -86,13 +94,28 @@ class HBNBCommand(cmd.Cmd):
         """Usage: create <class>
         Create a new class instance and print its id.
         """
-        argl = parse(arg)
-        if len(argl) == 0:
+        new_arg = parse(arg)
+        # we can us print(HBNBCommand.__classes) to see
+        # content of the __classes we just created
+        if len(new_arg) == 0:
             print("** class name missing **")
-        elif argl[0] not in HBNBCommand.__classes:
+        # ----- We can also use this
+        # try:
+        #     bm1 = eval(new_arg[0])()
+        #     storage.save()
+        #     # print(bm1.__class__.__name__)
+        #     print(bm1.id)
+        # except NameError:
+        #     print("** class doesn't exist **")
+        # -------------------------------------
+
+        elif new_arg[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
-            print(eval(argl[0])().id)
+            bm1 = eval(new_arg[0])()
+            print(bm1.id)
+            # or in short
+            # print(eval(new_arg[0])().id)
             storage.save()
 
     def do_show(self, arg):

@@ -41,7 +41,8 @@ class HBNBCommand(cmd.Cmd):
     """ Holberton Command interpretor
         using cmd module
     """
-    prompt = "(hbnb)"
+
+    prompt = "(hbnb) "
     # get all subclasses of BaseModel
     subclasses = BaseModel.__subclasses__()
     # output>>>
