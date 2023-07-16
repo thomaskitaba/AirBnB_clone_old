@@ -22,7 +22,8 @@ class BaseModel:
                     d = datetime.strptime(kwargs[key], t_format)
                     self.__dict__[key] = d
                 else:
-                    self.__dict__[key] = kwargs[key]
+                    d = datetime.strptime(kwargs[key], t_format)
+                    self.__dict__[key] = d
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
