@@ -41,7 +41,7 @@ class HBNBCommand(cmd.Cmd):
     """ Holberton Command interpretor
         using cmd module
     """
-    prompt = "(hbnb) "
+    prompt = "(hbnb )"
     # get all subclasses of BaseModel
     subclasses = BaseModel.__subclasses__()
     # output>>>
@@ -233,7 +233,6 @@ class HBNBCommand(cmd.Cmd):
             (save the change into the JSON file)
             update <class name> <id> <attribute name> "<attribute value>"
         """
-        new_arg = parse(arg)
         new_arg = parse(arg)
         all_objs = storage.all()
         all_objs = storage.all()
