@@ -22,8 +22,7 @@ class BaseModel:
                     d = datetime.strptime(kwargs[key], t_format)
                     self.__dict__[key] = d
                 else:
-                    d = datetime.strptime(kwargs[key], t_format)
-                    self.__dict__[key] = d
+                    self.__dict__[key] = kwargs[key]
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
@@ -31,33 +30,22 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
-        """ __str__ """
-        c_name = self.__class__.__name__
-        id = self.id
-        dict = self.__dict__
-        return ("[{}] ({}) {}".format(c_name, id, dict))
+        """Returns official string representation"""
+
+        return "[{}] ({}) {}".\
+            format(type(self).__name__, self.id, self.__dict__)
 
     def save(self):
-        """ save """
+        """updates the public instance attribute updated_at"""
+
         self.updated_at = datetime.now()
-        models.storage.save()
+        storage.save()
 
     def to_dict(self):
-        """Return the dictionary representation of a Rectangle."""
-        # we can use this or
-        # t_format = "%Y-%m-%dT%H:%M:%S.%f"
-        # return {
-        #     "id": self.id,
-        #     "created_at": self.created_at.isoformat(),
-        #     "updated_at": self.updated_at.isoformat(),
-        #     "my_number": self.my_number,
-        #     "name": self.name,
-        #     "__class__": self.__class__.__name__
-        # }
-        # limitation of the above is if my_number or name is not set
-        # then accessing them in later stages will raise error
-        temp_dict = self.__dict__.copy()
-        temp_dict["created_at"] = temp_dict["created_at"].isoformat()
-        temp_dict["updated_at"] = temp_dict["updated_at"].isoformat()
-        temp_dict["__class__"] = self.__class__.__name__
-        return temp_dict
+        """returns a dictionary containing all keys/values of __dict__"""
+
+        my_dict = self.__dict__.copy()
+        my_dict["__class__"] = type(self).__name__
+        my_dict["created_at"] = my_dict["created_at"].isoformat()
+        my_dict["updated_at"] = my_dict["updated_at"].isoformat()
+        return my_dict
