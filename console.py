@@ -192,62 +192,81 @@ class HBNBCommand(cmd.Cmd):
             print(output_objs)
 
     def do_count(self, arg):
-        """Usage: count <class> or <class>.count()
-        Retrieve the number of instances of a given class."""
-        argl = parse(arg)
+        """ count number of class instances """
+        new_arg = parse(arg)
         count = 0
-        for obj in storage.all().values():
-            if argl[0] == obj.__class__.__name__:
+        all_objs = storage.all()
+        for key in all_objs:
+            if all_objs[key].__class__.__name__ == new_arg[0]:
                 count += 1
         print(count)
 
     def do_update(self, arg):
-        """Usage: update <class> <id> <attribute_name> <attribute_value> or
-        <class>.update(<id>, <attribute_name>, <attribute_value>) or
-        <class>.update(<id>, <dictionary>)
-        Update a class instance of a given id by adding or updating
-        a given attribute key/value pair or dictionary."""
-        argl = parse(arg)
-        objdict = storage.all()
-
-        if len(argl) == 0:
+        """ Updates an instance based on the class
+            name and id by adding or updating attribute
+            (save the change into the JSON file)
+            update <class name> <id> <attribute name> "<attribute value>"
+        """
+        new_arg = parse(arg)
+        all_objs = storage.all()
+        all_objs = storage.all()
+        #   print(storage.all())    # test print
+        if len(new_arg) == 0:
             print("** class name missing **")
-            return False
-        if argl[0] not in HBNBCommand.__classes:
+        elif new_arg[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
-            return False
-        if len(argl) == 1:
+        elif len(new_arg) == 1:
             print("** instance id missing **")
-            return False
-        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
-            print("** no instance found **")
-            return False
-        if len(argl) == 2:
+        # elif all(all_objs[new_arg[1]] != obj for obj in all_objs.values()):
+        elif "{}.{}".format(new_arg[0], new_arg[1]) not in all_objs.keys():
+            print("** instance id missing **")
+        elif len(new_arg) == 2:
             print("** attribute name missing **")
-            return False
-        if len(argl) == 3:
-            try:
-                type(eval(argl[2])) != dict
-            except NameError:
-                print("** value missing **")
-                return False
+        elif len(new_arg) == 3:
+            print("** value missing **")
+        elif len(new_arg) == 4:
+            # <class name> <id> <attribute name> "<attribute value>
+            # all_objs = storage.all()
+            # obj_key = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
 
-        if len(argl) == 4:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            if argl[2] in obj.__class__.__dict__.keys():
-                valtype = type(obj.__class__.__dict__[argl[2]])
-                obj.__dict__[argl[2]] = valtype(argl[3])
+            # if new_arg[2] in obj_key.to_dict():
+            #     obj_type = type(obj_key.to_dict()[new_arg[2]])
+            #     obj_key.to_dict()[new_arg[2]] = obj_type(new_arg[3])
+            # else:
+            #     obj_key.to_dict()[new_arg[2]] = new_arg[3]
+
+            # Temporary Code
+            obj = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
+            if new_arg[2] in obj.to_dict().keys():
+                valtype = type(obj.to_dict()[new_arg[2]])
+                obj.__dict__[new_arg[2]] = valtype(new_arg[3])
             else:
-                obj.__dict__[argl[2]] = argl[3]
-        elif type(eval(argl[2])) == dict:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            for k, v in eval(argl[2]).items():
-                if (k in obj.__class__.__dict__.keys() and
-                        type(obj.__class__.__dict__[k]) in {str, int, float}):
-                    valtype = type(obj.__class__.__dict__[k])
+                obj.__dict__[new_arg[2]] = new_arg[3]
+        elif type(eval(new_arg[2])) == dict:
+            obj = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
+            for k, v in eval(new_arg[2]).items():
+                if (k in obj.to_dict().keys() and
+                   type(obj.to_dict()[k]) in {str, int, float}):
+                    valtype = type(obj.to_dict()[k])
                     obj.__dict__[k] = valtype(v)
                 else:
                     obj.__dict__[k] = v
+
+        #     obj = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
+        #     if new_arg[2] in obj.__class__.__dict__.keys():
+        #         valtype = type(obj.__class__.__dict__[new_arg[2]])
+        #         obj.__dict__[new_arg[2]] = valtype(new_arg[3])
+        #     else:
+        #         obj.__dict__[new_arg[2]] = new_arg[3]
+        # elif type(eval(new_arg[2])) == dict:
+        #     obj = all_objs["{}.{}".format(new_arg[0], new_arg[1])]
+        #     for k, v in eval(new_arg[2]).items():
+        #         if (k in obj.__class__.__dict__.keys() and
+        #         type(obj.__class__.__dict__[k]) in {str, int, float}):
+        #             valtype = type(obj.__class__.__dict__[k])
+        #             obj.__dict__[k] = valtype(v)
+        #         else:
+        #             obj.__dict__[k] = v
         storage.save()
 
 
