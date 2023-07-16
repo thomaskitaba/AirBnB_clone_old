@@ -193,7 +193,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, arg):
         """ count number of class instances """
-        new_arg = arg.split(' ')
+        new_arg = parse(arg)
         count = 0
         all_objs = storage.all()
         for key in all_objs:
@@ -208,7 +208,6 @@ class HBNBCommand(cmd.Cmd):
             update <class name> <id> <attribute name> "<attribute value>"
         """
         new_arg = parse(arg)
-        all_objs = storage.all()
         all_objs = storage.all()
         #   print(storage.all())    # test print
         if len(new_arg) == 0:
